@@ -1,0 +1,64 @@
+*popupe.txt*	Experimental library to create editable popup windows.
+
+
+Author : Bakudankun
+License: NYSL (http://www.kmonos.net/nysl/index.ja.html)
+
+
+==============================================================================
+CONTENTS					*popupe-contents*
+
+INTRODUCTION					|popupe|
+FUNCTIONS					|popupe-functions|
+OPTIONS						|popupe-options|
+
+
+==============================================================================
+INTRODUCTION					*popupe*
+
+Popupe.vim provides some functions that creates editable popups by hacking
+Vim's terminal popup window (|popup-terminal|). This is really hacky so it can
+be broken by future change of Vim. Please use this at your own risk.
+Due to the limitation of terminal popups, you cannot leave the popup window
+while it is opened.
+
+==============================================================================
+FUNCTIONS					*popupe-functions*
+
+Functions are exported in Vim9 script, so you can import and use like: >
+	import autoload 'popupe.vim'
+	popupe.PopupInput(...)
+
+popupe#PopupInput({Callback}:   func(string),		*popupe#PopupInput()*
+                  {text}:       string = '',
+                  {completion}: string = '',
+                  {options}:    dict<any> = {}): number
+		Opens a popup that can be used just like |input()|. {text} is
+		used for the default reply.
+		Hitting <Enter> calls {Callback} with the input string.
+		Hitting <Esc> or <C-C> calls {Callback} with |null_string|.
+		{completion} is not used for now. It may be implemented in the
+		future.
+		{options} is passed as the second argument of
+		|popup_create()|.
+		Returns the window ID of the popup.
+
+popupe#PopupEdit({text}:    any,			*popupe#PopupEdit()*
+		 {options}: dict<any>): number
+		Opens an editable popup. {text} is passed as the second
+		argument of |popup_settext()|, and {options} is passed as the
+		second argument of |popup_create()|.
+		Returns the window ID of the popup.
+
+
+==============================================================================
+OPTIONS						*popupe-options*
+
+						*g:popupe_term_wait*
+g:popupe_term_wait	(default: 100)
+			Popupe.vim needs to wait an empty process to end in
+			order to prepare a editable popup. If you experience
+			unstability, try increasing this variable.
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
