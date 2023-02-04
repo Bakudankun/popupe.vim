@@ -42,7 +42,7 @@ def CreateEditablePopup(options: dict<any>): number
     hidden: 1,
     term_highlight: 'Pmenu',
   })
-  term_wait(buf, get(g:, 'popupe_term_wait', 100))
+  term_getjob(buf)->job_stop()
   for [option, value] in items({
       modifiable: 1,
       buftype: 'popup',
