@@ -36,13 +36,12 @@ enddef
 
 
 def CreateEditablePopup(options: dict<any>): number
-  const cmd = has('win32') ? 'cmd /c exit' : 'true'
-  const buf = term_start(cmd, {
+  const buf = term_start('NONE', {
     term_name: 'popupe',
     hidden: 1,
     term_highlight: 'Pmenu',
   })
-  term_getjob(buf)->job_stop()
+  term_getjob(buf)->ch_close()
   for [option, value] in items({
       modifiable: 1,
       buftype: 'popup',
